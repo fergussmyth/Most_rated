@@ -6,15 +6,14 @@ source = requests.get('https://www.penguinrandomhouse.com/the-read-down/21-books
 
 soup = BeautifulSoup(source, 'lxml')
 
-csv_file = open('book_scrape.csv', 'w')
-
-csv_writer = csv.writer(csv_file)
-csv_writer.writerow(['headline'])
-
 for article in soup.find_all('div', class_='list-meta-wrap'):
-    headline = article.div.text
+    headline = article.div.a.text
     print(headline)
 
-    csv_writer.writerow([headline])
+for name in soup.find_all(class_='author'):
+    author = name.text
+    print(author)
 
-csv_file.close()
+for notes in soup.find_all(class_='desc'):
+    description = notes.text
+    print(description)
